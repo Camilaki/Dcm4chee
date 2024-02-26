@@ -63,5 +63,3 @@ POSTGRES_PASSWORD=pacs
 docker run --rm --network=dcm4chee_default dcm4che/dcm4che-tools storescu -cDCM4CHEE@arc:11112 /opt/dcm4che/etc/testdata/dicom
 
 
-sudo rm dcm4chee
-fs4085fs

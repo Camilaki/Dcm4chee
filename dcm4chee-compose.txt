@@ -78,6 +78,3 @@ services:
       - /var/local/dcm4chee-arc/storage:/storage
 
 
-12.2-22
-15.4-31
-@

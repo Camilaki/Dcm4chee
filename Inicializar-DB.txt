@@ -5,9 +5,9 @@
  > createdb -h 192.168.100.100 -U pacs pacsdb
 
 
- > psql -h 192.168.100.100 pacsdb pacs < $DCM4CHEE_ARC/sql/psql/create-psql.sql
- > psql -h 192.168.100.100 pacs < $DCM4CHEE_ARC/sql/psql/create-fk-index.sql
- > psql -h 192.168.100.100 pacs < $DCM4CHEE_ARC/sql/psql/create-case-insensitive-index.sql
+ > psql -h HOST pacsdb pacs < $DCM4CHEE_ARC/sql/psql/create-psql.sql
+ > psql -h HOST pacs < $DCM4CHEE_ARC/sql/psql/create-fk-index.sql
+ > psql -h HOST pacs < $DCM4CHEE_ARC/sql/psql/create-case-insensitive-index.sql
 
 
 docker pull dcm4che/postgres-dcm4chee:15.4-31
