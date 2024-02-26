@@ -1,0 +1,101 @@
+window.config = {
+  routerBasename: '/',
+  extensions: [],
+  modes: [],
+  showStudyList: true,
+  dataSources: [
+    {
+      friendlyName: 'dcmjs DICOMWeb Server',
+      namespace: '@ohif/extension-default.dataSourcesModule.dicomweb',
+      sourceName: 'dicomweb',
+      configuration: {
+        name: 'DCM4CHEE',
+        wadoUriRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/wado',
+        qidoRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs',
+        wadoRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs',
+        qidoSupportsIncludeField: true,
+        supportsReject: true,
+        imageRendering: 'wadors',
+        thumbnailRendering: 'wadors',
+        enableStudyLazyLoad: true,
+        supportsFuzzyMatching: true,
+        supportsWildcard: true,
+      },
+    },
+  ],
+  defaultDataSourceName: 'dicomweb',
+};
+
+
+
+window.config = {
+    ...
+    servers: {
+        dicomWeb: [
+        {
+           ...
+            requestOptions: {
+              auth: options => {
+                const token = 'HERE GOES THE TOKEN';
+                return 'Bearer ' + token;
+              },
+            }
+        },
+        ],
+    },
+    window.config = {
+    ...
+    servers: {
+        dicomWeb: [
+        {
+           ...
+            requestOptions: {
+              auth: options => {
+                // use this if you want to pass the token in the URL like ?token=<TOKEN>
+                const url = new URLSearchParams(window.location.search);
+                const token = url.get('token');
+                return 'Bearer ' + token;
+              },
+            }
+        },
+        ],
+    },
+
+
+I am having the same issue CORS with dcm4chee-arc-light- 5.28.0 secure and ohif 4.12
+
+My ohif-config.js:
+
+window.config = {
+// default: '/'
+routerBasename: '/', //MODIFCA LINK
+extensions: [],
+showStudyList: true,
+filterQueryParam: true,
+servers: {
+dicomWeb: [
+{
+name: 'DCM4CHEE',
+wadoUriRoot: 'https://10.10.10.57:8443/dcm4chee-arc/aets/DCM4CHEE/wado',
+qidoRoot: 'https://10.10.10.57:8443/dcm4chee-arc/aets/DCM4CHEE/rs',
+wadoRoot: 'https://10.10.10.57:8443/dcm4chee-arc/aets/DCM4CHEE/rs',
+qidoSupportsIncludeField: false,
+//qidoSupportsIncludeField: true,
+imageRendering: 'wadors',
+thumbnailRendering: 'wadors',
+enableStudyLazyLoad: true,
+supportsFuzzyMatching: true,
+//auth for keycloak
+requestOptions: {
+auth: options => {
+// use this if you want to pass the token in the URL like ?token=
+const url = new URLSearchParams(window.location.search);
+const token = url.get('token');
+return 'Bearer ' + token;
+},
+
+    },
+  },
+],
+},
+

@@ -1,0 +1,44 @@
+ $ docker network create dcm4chee_network
+
+$ docker run --network=dcm4chee_network --name ldap \
+           -p 389:389 \
+           -e STORAGE_DIR= /storage/fs1 
+           -v /var/local/dcm4chee-arc/ldap:/var/lib/openldap/openldap-data \
+           -v /var/local/dcm4chee-arc/slapd.d:/etc/openldap/slapd.d \
+           -d dcm4che/slapd-dcm4chee:2.6.5-31.2
+
+$ docker run --network=dcm4chee_network --name db \
+           -p 5432:5432 \
+           -e POSTGRES_DB=pacsdb \
+           -e POSTGRES_USER=pacs \
+           -e POSTGRES_PASSWORD=pacs \
+           -v /etc/localtime:/etc/localtime:ro \
+           -v /etc/timezone:/etc/timezone:ro \
+           -v /var/local/dcm4chee-arc/db:/var/lib/postgresql/data \
+           -d dcm4che/postgres-dcm4chee:15.4-31
+
+$ docker run --network=dcm4chee_network --name arc \
+           -p 8080:8080 \
+           -p 8443:8443 \
+           -p 9990:9990 \
+           -p 9993:9993 \
+           -p 11112:11112 \
+           -p 2762:2762 \
+           -p 2575:2575 \
+           -p 12575:12575 \
+           -e POSTGRES_DB=pacsdb \
+           -e POSTGRES_USER=pacs \
+           -e POSTGRES_PASSWORD=pacs \
+           -e WILDFLY_CHOWN=/opt/wildfly/standalone\
+           -e WILDFLY_WAIT_FOR="ldap:389 db:5432" \
+           -v /etc/localtime:/etc/localtime:ro \
+           -v /etc/timezone:/etc/timezone:ro \
+           -v /var/local/dcm4chee-arc/wildfly:/opt/wildfly/standalone \
+           -v /var/local/dcm4chee-arc/storage:/storage\                          92
+           -d dcm4che/dcm4chee-arc-psql:5.31.2
+
+
+sudo docker-compose -p dcm4chee-arc down
+sudo sudo mv /var/local/dcm4chee-arc/wildfly /tmp
+
+

@@ -1,0 +1,24 @@
+ > sudo -u postgres createuser -U postgres -P -d pacs
+ Enter password for new role: pacs
+ Enter it again: pacs
+
+ > createdb -h 192.168.100.100 -U pacs pacsdb
+
+
+ > psql -h 192.168.100.100 pacsdb pacs < $DCM4CHEE_ARC/sql/psql/create-psql.sql
+ > psql -h 192.168.100.100 pacs < $DCM4CHEE_ARC/sql/psql/create-fk-index.sql
+ > psql -h 192.168.100.100 pacs < $DCM4CHEE_ARC/sql/psql/create-case-insensitive-index.sql
+
+
+docker pull dcm4che/postgres-dcm4chee:15.4-31
+dcm4che/dcm4chee-arc-psql:5.31.2
+
+$ docker run --rm -it dcm4che/postgres-dcm4chee:12.2-22 tail /docker-entrypoint-initdb.d/10_create-psql.sql -n20
+
+sudo mv /var/local/dcm4chee-arc/wildfly /tmp
+
+docker stop `docker ps -qa` > /dev/null 2>&1; docker system prune --volumes --all;
+
+9.4.26-31.1    Postgres
+5.31.1
+10.23-31.1
