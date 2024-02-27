@@ -1,3 +1,5 @@
+Las versiones de las imágenes no corresponden a las últimas actualizaciones de la fecha 26/02/2024
+
 version: "3"
 services:
   ldap:

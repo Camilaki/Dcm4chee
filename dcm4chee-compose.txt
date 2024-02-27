@@ -1,14 +1,5 @@
-$ docker network create dcm4chee_network
-
-$ docker run --network=dcm4chee_network --name ldap \
-           -p 389:389 \
-           -v /var/local/dcm4chee-arc/ldap:/var/lib/openldap/openldap-data \
-           -v /var/local/dcm4chee-arc/slapd.d:/etc/openldap/slapd.d \
-           -d dcm4che/slapd-dcm4chee:2.4.57-24.2
-
-
-
-
+Archivo docker-compose.yml/Las variables  de entorno se encuentras explícitas aquí, sin necesidad de un 
+docker-compose.env
 
 version: "3"
 services:
@@ -34,8 +25,8 @@ services:
       driver: json-file
       options:
         max-size: "10m"
-    environment:
-      STORAGE_DIR=/storage/fs1
+    environment: 
+      STORAGE_DIR=/storage/fs1 
       POSTGRES_DB: pacsdb
       POSTGRES_USER: pacs
       POSTGRES_PASSWORD: pacs
